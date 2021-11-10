@@ -13,7 +13,8 @@
     "lodash": "^4.17.20"
   },
   "scripts": {
-    "start": "nodemon src/index.js --watch views --watch www --watch src"
+    "start": "nodemon src/index.js --watch views --watch www --watch src",
+    "build": "echo NOBUILD"
   },
   "devDependencies": {
     "nodemon": "^2.0.14"
