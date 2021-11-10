@@ -1,0 +1,22 @@
+{
+  "name": "@bucketws/demo",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "@bucketws/api": "2.0.75",
+    "axios": "^0.21.1",
+    "lodash": "^4.17.20"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js --watch views --watch www --watch src",
+    "build": "echo NOBUILD"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
