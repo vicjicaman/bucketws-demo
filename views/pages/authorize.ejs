@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <div class="container">
+      <%- include('../partials/header'); %>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <%- include('../partials/nav'); %>
+        </div>
+        <div class="col-sm-8 text-center">
+
+          <div class="my-4" id="status"></div>
+
+          <button id="authorizer" style="display:none;" class="btn btn-primary">
+            Authorize private bucket
+          </button>
+          <img id="loading" style="display:none;" src="https://editor.pagews.com/_PWSR_/lib/loader.gif" />
+
+
+          <div class="mt-4">
+            <button id="unauthorizer" style="display:none;" class="btn btn-secondary">
+              Revoke bucket authorization
+            </button>
+          </div>
+
+          <div class="mt-4" id="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const bucketPrivate = "<%=bucketPrivate%>"
+
+      const authorizer = document.getElementById("authorizer");
+      const unauthorizer = document.getElementById("unauthorizer");
+      const loading = document.getElementById("loading");
+      const result = document.getElementById("result");
+      const status = document.getElementById("status");
+
+      refreshAuthState(bucketPrivate);
+
+      authorizer.onclick = () => {
+        (async () => {
+          loading.style.display = "inline";
+          authorizer.style.display = "none";
+
+          try {
+            const response = await fetch(
+              new Request(`/app/authorize-private-from-server`, {
+                method: "POST",
+                cors: true
+              }),
+              { mode: "cors" }
+            );
+
+            if (response.status === 200) {
+              const responseJson = await response.json();
+              const { token }= responseJson;
+              await PageWSLib.Image.login(domain, token);
+              result.innerHTML = "Now you have access to the files on the private bucket <b><%=bucketPrivate%></b>"
+              await refreshAuthState(bucketPrivate)
+            } else {
+              console.error("request.error:" + response.status);
+              throw new Error("request.error:" + response.status);
+            }
+
+          }catch(e){
+            throw e;
+          }finally {
+            loading.style.display = "none";
+            //authorizer.style.display = "inline";
+          }
+        })();
+      };
+
+      unauthorizer.onclick = () => {
+        (async () => {
+          loading.style.display = "inline";
+          unauthorizer.style.display = "none";
+
+          await PageWSLib.Image.logout(domain);
+          result.innerHTML = `You access to the bucket <b><%=bucketPrivate%></b> has been revoked. <b class="text-danger">You still can see the cache of previously authorized files.</b>`
+          await refreshAuthState(bucketPrivate)
+          loading.style.display = "none";
+          //unauthorizer.style.display = "inline";
+
+        })();
+      };
+    </script>
+  </body>
+</html>
