@@ -17,7 +17,6 @@ const init = (app, cxt) => {
 
   app.post("/app/authorize-private-from-server", async function(req, res) {
     const token = await instance.Bucket.authorize({
-      domain,
       name: bucketPrivate
     });
 
