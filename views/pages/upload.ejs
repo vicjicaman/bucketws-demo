@@ -54,6 +54,7 @@
             });
           }
 
+          const loaderUrl= "https://editor.pagews.com/_PWSR_/lib/loader.gif"
           var uploadObj = PageWSLib.Upload.create({
             id: "uploader-target",
             domain,
@@ -65,6 +66,7 @@
               config: {
                 preview: true,
                 controlLoadingAreaClass: "text-center",
+                controlLoadingAreaContent: `<img src="${loaderUrl}" />`,
                 previewImageClass: "w-50 my-4",
                 previewAreaClass: "text-center",
                 controlAreaClass: "mb-4",
@@ -94,7 +96,7 @@
               result.innerHTML = `
               <div class="row">
                 <div class="col">
-                  <img src="https://editor.pagews.com/_PWSR_/lib/loader.gif" />
+                  <img src="${loaderUrl}" />
                 </div>
               </div>`;
             },
