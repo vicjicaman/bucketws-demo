@@ -47,11 +47,9 @@ You can test the API on your localhost and start uploading file in 5 minutes.
 
 ### Prerequisites
 
-- Create an account at https://bucket.listws.com/v2/auth
-- Create a private bucket named **test-private**
+- Create an account at https://app.bucketws.com/auth/app/register
 - Create a public bucket named **test-public**
-- Create an API secret on the API Keys section
-- Get the localhost access key on the section Domain -> CORS
+- Get the API Key
 
 
 ### Installation
@@ -71,10 +69,7 @@ You can test the API on your localhost and start uploading file in 5 minutes.
 ```  
     DOMAIN=xxxxxx.pws-trial-uc1.xyz
     BUCKET_PUBLIC=test-public
-    BUCKET_PRIVATE=test-private
     API_KEY=kkkkkkkk-kkkk-kkkk-kkkk-kkkkkkkkkkkk
-    API_SECRET=ssssssss-ssss-ssss-ssss-sssssssssss
-    LOCALHOST_ACCESS_KEY=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
 ```  
 
 ### Start
@@ -92,14 +87,14 @@ If you upload a png, webp or jpg file the service generated a set of smaller res
 
 You can include on your site the next script to automatically detect and change the right image based on the image or background width.
 ```
-    <script src="https://xxxxxx.pws-trial-uc1.xyz/_PWSR_/lib/pkg/v2/pagews-image/index.js"></script>
+    <script src="https://xxxxxx.pws-trial-uc1.xyz/package/uploader-lib/latest/index.js"></script>
 ```
 
-Now use the minimap URL on the **data-src** attribute as in this example:
+Now use the image URL on the **src** attribute as in this example:
 
 ```
     <img 
-    data-src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/photos/9aca4aa83e79507630361b8fad6a7561.jpg/xs.webp"
+    src="https://util-files.listws.com/_PWSR_/files/minimaps/buckets/photos/9aca4aa83e79507630361b8fad6a7561.jpg"
     /> 
 ```
 You can resize your screen or check the image on any device, the image will be automatically changed to get the optimal image size.
