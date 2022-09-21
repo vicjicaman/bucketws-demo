@@ -1,13 +1,11 @@
 const init = (app, cxt) => {
-  //
 
   app.use(function(req, res, next) {
     const isValid =
       cxt.domain &&
       cxt.bucketPublic &&
       cxt.bucketPrivate &&
-      cxt.apiKey &&
-      cxt.apiSecret;
+      cxt.secret;
 
     if (!isValid) {
       if (req.originalUrl !== "/init") {
@@ -32,18 +30,6 @@ const init = (app, cxt) => {
     res.render("pages/init", { ...cxt, page: "init" });
   });
 
-  app.get("/setup", function(req, res) {
-    res.render("pages/setup", { ...cxt, page: "setup" });
-  });
-
-  app.get("/upload/private", function(req, res) {
-    res.render("pages/upload", {
-      ...cxt,
-      page: "upload/private",
-      bucketMode: "private",
-      bucketTarget: cxt.bucketPrivate
-    });
-  });
 
   app.get("/upload/public", function(req, res) {
     res.render("pages/upload", {
@@ -54,10 +40,6 @@ const init = (app, cxt) => {
     });
   });
 
-  app.get("/authorize", function(req, res) {
-    res.render("pages/authorize", { ...cxt, page: "authorize" });
-  });
-
   app.get("/list/public", function(req, res) {
     res.render("pages/list", {
       ...cxt,
@@ -65,19 +47,6 @@ const init = (app, cxt) => {
       bucketMode: "public",
       bucketTarget: cxt.bucketPublic
     });
-  });
-
-  app.get("/list/private", function(req, res) {
-    res.render("pages/list", {
-      ...cxt,
-      page: "list/private",
-      bucketMode: "private",
-      bucketTarget: cxt.bucketPrivate
-    });
-  });
-
-  app.get("/anonymous", function(req, res) {
-    res.render("pages/anonymous", { ...cxt, page: "anonymous" });
   });
 };
 

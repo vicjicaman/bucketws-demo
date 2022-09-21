@@ -7,22 +7,17 @@ const { init: initApp } = require("./app");
 
 const app = express();
 
-const release = process.env.RELEASE || "v2";
 const instance = init({
-  url: `https://api.pagews.com/${release}/bucket/api`,
-  key: process.env.API_KEY,
-  secret: process.env.API_SECRET
+  url: `https://${process.env.DOMAIN}/api/bucket`,
+  secret: process.env.API_KEY,
 });
 
 const cxt = {
-  release,
   domain: process.env.DOMAIN,
   bucketPublic: process.env.BUCKET_PUBLIC,
   bucketPrivate: process.env.BUCKET_PRIVATE,
-  localhostAccessKey: process.env.LOCALHOST_ACCESS_KEY,
   instance,
-  apiKey: process.env.API_KEY,
-  apiSecret: process.env.API_SECRET
+  secret: process.env.API_KEY,
 };
 
 app.use(bodyParser.json());

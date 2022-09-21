@@ -8,9 +8,7 @@
       <%- include('../partials/header'); %>
 
       <div class="row">
-        <div class="col-sm-4">
-          <%- include('../partials/nav'); %>
-        </div>
+        <div class="col-sm-4"><%- include('../partials/nav'); %></div>
         <div class="col-8">
           <div class="my-sm-4">
             Upload a file to the <%=bucketMode%> bucket <b><%=bucketTarget%></b>
@@ -38,105 +36,95 @@
     </div>
 
     <script>
-
       (async () => {
-          var bucket = "<%= bucketTarget %>";
-          var bucketMode = "<%= bucketMode %>";
+        var bucket = "<%= bucketTarget %>";
+        var bucketMode = "<%= bucketMode %>";
 
-          const immediate = true;
-          const trigger = document.getElementById("uploader-trigger");
-          trigger.style.display = !immediate ? "block" : "none";
+        const immediate = true;
+        const trigger = document.getElementById("uploader-trigger");
+        trigger.style.display = !immediate ? "block" : "none";
 
-          let allowFetch = true
-          if(bucketMode === "private"){
-            refreshAuthState(bucket).then(info => {
-              allowFetch = info !== null
-            });
-          }
+        let allowFetch = true;
+        if (bucketMode === "private") {
+          refreshAuthState(bucket).then((info) => {
+            allowFetch = info !== null;
+          });
+        }
 
-          const loaderUrl= "https://editor.pagews.com/_PWSR_/lib/loader.gif"
-          var uploadObj = PageWSLib.Upload.create({
-            id: "uploader-target",
-            domain,
-            bucket,
-            tags: ["test", "tutorial"],
-            method: { type: "post", config: { url: "/app/signed-from-server/<%=bucketMode%>" } },
-            component: {
-              type: "simple-selector",
-              config: {
-                preview: true,
-                controlLoadingAreaClass: "text-center",
-                controlLoadingAreaContent: `<img src="${loaderUrl}" />`,
-                previewImageClass: "w-50 my-4",
-                previewAreaClass: "text-center",
-                controlAreaClass: "mb-4",
-                controlContainerClass: "custom-file",
-                controlClass: "custom-file-input",
-                controlLabelClass: "custom-file-label",
-                warningClass: "alert alert-warning",
-                messageClass: "alert alert-info",
-                errorClass: "alert alert-danger",
-                labels: {
-                  select: "Choose file",
-                  browse: "Browse"
-                }
-              }
+        const loaderUrl = "https://editor.pagews.com/_PWSR_/lib/loader.gif";
+        var uploadObj = window.uploader.create({
+          id: "uploader-target",
+          domain,
+          bucket,
+          tags: ["test", "tutorial"],
+          method: {
+            type: "post",
+            config: { url: "/app/signed-from-server/<%=bucketMode%>" },
+          },
+          component: {
+            type: "simple-selector",
+            config: {
+              preview: true,
+              controlLoadingAreaClass: "text-center",
+              controlLoadingAreaContent: `<img src="${loaderUrl}" />`,
+              previewImageClass: "w-50 my-4",
+              previewAreaClass: "text-center",
+              controlAreaClass: "mb-4",
+              controlContainerClass: "custom-file",
+              controlClass: "custom-file-input",
+              controlLabelClass: "custom-file-label",
+              warningClass: "alert alert-warning",
+              messageClass: "alert alert-info",
+              errorClass: "alert alert-danger",
+              labels: {
+                select: "Choose file",
+                browse: "Browse",
+              },
             },
-            immediate,
-            onSelected: ({ file, fileid }) => {
-              const result = document.getElementById("uploader-result");
-              result.innerHTML = ``;
-            },
-            onUploading: ({ fileid }) => {
-              trigger.style.display = "none";
-            },
-            onUploaded: ({ fileid }) => {
-              const result = document.getElementById("uploader-result");
+          },
+          immediate,
+          onSelected: ({ file, fileid }) => {
+            const result = document.getElementById("uploader-result");
+            result.innerHTML = ``;
+          },
+          onUploading: ({ fileid }) => {
+            trigger.style.display = "none";
+          },
+          onUploaded: ({ fileid }) => {
+            const result = document.getElementById("uploader-result");
 
-              result.innerHTML = `
+            result.innerHTML = `
               <div class="row">
                 <div class="col">
                   <img src="${loaderUrl}" />
                 </div>
               </div>`;
-            },
-            onReady: params => {
-
-              if(!allowFetch){
-                const result = document.getElementById("uploader-result");
-                result.innerHTML = ``;
-                return;
-              }
-
-              const { isMinimap, isImage } = params;
-              if (immediate === false) {
-                trigger.style.display = "block";
-              }
-
-              if (!isMinimap) {
-                if (isImage) {
-                  printImageResult(params);
-                } else {
-                  printFileResult(params);
-                }
-              }
-            },
-            onMinimapReady: params => {
-              if(!allowFetch){
-                return;
-              }
-
-              printMinimapResult(params);
-            },
-            onError: ({ fileid }) => {
-              if (immediate === false) {
-                trigger.style.display = "block";
-              }
+          },
+          onReady: (params) => {
+            if (!allowFetch) {
+              const result = document.getElementById("uploader-result");
+              result.innerHTML = ``;
+              return;
             }
-          });
 
-      })()
+            const { isImage } = params;
+            if (immediate === false) {
+              trigger.style.display = "block";
+            }
 
+            if (isImage) {
+              printImageResult(params);
+            } else {
+              printFileResult(params);
+            }
+          },
+          onError: ({ fileid }) => {
+            if (immediate === false) {
+              trigger.style.display = "block";
+            }
+          },
+        });
+      })();
     </script>
   </body>
 </html>

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@bucketws/api@2.0.75":
-  version "2.0.75"
-  resolved "https://registry.yarnpkg.com/@bucketws/api/-/api-2.0.75.tgz#19316497c51d0dfe9384d74e9c5cae4158354bc0"
-  integrity sha512-4TetjEpYkZ6RSX+by2Jq4zyw7THa06ak0KDyMcuXxgy1KTp3GYrQaukHFq8KoknSnZEFAgxOZNg4X0KZGTQbmA==
+"@bucketws/api@2.0.130":
+  version "2.0.130"
+  resolved "https://registry.yarnpkg.com/@bucketws/api/-/api-2.0.130.tgz#09e3f3cbc3794791542e2cad81fbe3a19d733ae7"
+  integrity sha512-8Zk0gO4a4/nQ6Wwy36UlBpWiu5o2sD/zfFmbelV0RLZgiyde03exuyybnk/yAVrndwRwAtB0FueDEqNSv/x0ow==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"

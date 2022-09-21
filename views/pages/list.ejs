@@ -8,17 +8,19 @@
       <%- include('../partials/header'); %>
 
       <div class="row">
-        <div class="col-sm-4">
-          <%- include('../partials/nav'); %>
-        </div>
+        <div class="col-sm-4"><%- include('../partials/nav'); %></div>
         <div class="col-sm-8 text-center">
           <div class="my-4" id="status"></div>
 
           <div>
-              List files for <%=bucketMode%> bucket <b><%=bucketTarget%></b>
+            List files for <%=bucketMode%> bucket <b><%=bucketTarget%></b>
           </div>
 
-          <img id="loading" style="display:none;" src="https://editor.pagews.com/_PWSR_/lib/loader.gif" />
+          <img
+            id="loading"
+            style="display: none"
+            src="https://editor.pagews.com/_PWSR_/lib/loader.gif"
+          />
           <div id="result"></div>
         </div>
       </div>
@@ -32,63 +34,74 @@
 
       loading.style.display = "inline";
 
-
       (async () => {
         try {
-          let allowFetch = true
-          if(bucketMode === "private"){
+          let allowFetch = true;
+          if (bucketMode === "private") {
             const info = await refreshAuthState(bucketTarget);
-            allowFetch = info !== null
+            allowFetch = info !== null;
           }
 
-          if(!allowFetch){
+          if (!allowFetch) {
             return;
           }
 
           const response = await fetch(
             new Request(`/app/list/<%=bucketMode%>`, {
               method: "GET",
-              cors: true
-            }),
-            { mode: "cors" }
+            })
           );
 
           if (response.status === 200) {
             const responseJson = await response.json();
-            const { list }= responseJson;
+            const {
+              list: { items },
+            } = responseJson;
 
-            const imgs = list.map((file) => {
-              const { fileid, metadata:{ isImage, isMinimap } } = file;
+            const imgs = items
+              .map((file) => {
+                const { fileid, private: isPrivate, ext } = file;
 
-              const url = PageWSLib.Image.url(domain, bucketTarget, bucketMode === "private", fileid);
-              return isImage ? `
+                const isImage = window.uploader.isImageExt(ext);
+                const url = window.uploader.getBucketFileUrl(
+                  domain,
+                  bucketTarget,
+                  fileid,
+                  false
+                );
+
+                return isImage
+                  ? `
               <div class="col-4">
-                <img class="w-100 mt-4" data-src="${url}" />
-              </div>` : `
+                <img class="w-100 mt-4" src="${url}" />
+              </div>`
+                  : `
               <div class="col-4">
                 <a href="${url}" target="_blank">
                   download
                 </a>
-              </div>`
-            }).join("")
+              </div>`;
+              })
+              .join("");
             result.innerHTML = `<div class="container">
               <div class="row">
-                ${imgs}
+                ${
+                  items.length > 0
+                    ? imgs
+                    : `<div class="col text-center"> No files found </div>`
+                }
               </div>
-            </div>`
-
+            </div>`;
           } else {
             console.error("request.error:" + response.status);
             throw new Error("request.error:" + response.status);
           }
-
-        }catch(e){
+        } catch (e) {
           throw e;
-        }finally {
+        } finally {
           loading.style.display = "none";
         }
-      })()
-
+      })();
     </script>
   </body>
 </html>

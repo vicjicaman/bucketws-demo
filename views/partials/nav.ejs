@@ -1,36 +1,15 @@
-<div
-  class="nav flex-column nav-pills"
->
+<div class="nav flex-column nav-pills">
+  <a class="nav-link <% if (page === 'home') { %> active <% } %>" href="/"
+    >Home</a
+  >
   <a
-    class="nav-link <% if (page === 'home') { %> active <% } %> "
-    href="/"
-    >Home</a>
-  <!--<a
-      class="nav-link <% if (page === 'setup') { %> active <% } %> "
-      href="/setup"
-      >Setup</a> -->
+    class="nav-link <% if (page === 'upload/public') { %> active <% } %>"
+    href="/upload/public"
+    >Upload to <b>public</b></a
+  >
   <a
-      class="nav-link <% if (page === 'upload/public') { %> active <% } %> "
-      href="/upload/public"
-      >Server signed to <b>public</b></a>
-  <a
-      class="nav-link <% if (page === 'upload/private') { %> active <% } %> "
-      href="/upload/private"
-      >Server signed to <b>private</b></a>
-  <a
-      class="nav-link <% if (page === 'authorize') { %> active <% } %> "
-      href="/authorize"
-      >Authorize private</a>
-  <a
-      class="nav-link <% if (page === 'list/public') { %> active <% } %> "
-      href="/list/public"
-      >List <b>public</b> files</a>
-  <a
-      class="nav-link <% if (page === 'list/private') { %> active <% } %> "
-      href="/list/private"
-      >List <b>private</b> files</a>
-  <a
-    class="nav-link <% if (page === 'anonymous') { %> active <% } %> "
-    href="/anonymous"
-    >Anonymous</a>
+    class="nav-link <% if (page === 'list/public') { %> active <% } %>"
+    href="/list/public"
+    >List <b>public</b> files</a
+  >
 </div>
