@@ -37,8 +37,12 @@ This is a demo nodejs server that uses the BucketWS service for the next functio
 <!-- VIDEO -->
 ## Video
 
+
+The next video have a couple of details that are not up to date, if you have any issue please review the latest documentation: https://www.bucketws.com/docs/bucket/docs/getting-started-node
 Check this 2min video that shows the process of create the buckets on the UI and go through the demo functionalities.
 [view video](https://www.youtube.com/watch?v=VuhX_2E9sUw)
+
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
